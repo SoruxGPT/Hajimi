@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  soruxgemini:
+    image: epicmo/soruxgpt_gemini:latest
+    restart: unless-stopped
+    ports:
+      - "9315:9000"
+    environment:
+      TZ: Asia/Shanghai
+      PORT: 9000
+      GATEWAY: "网关地址"
+      GATEWAY_KEY: "网关密码"
+      ADMIN_API_LOGIN_INIT_KEY: "admin"
+      LICENSE: "你的授权码"
+      DATABASE_ENGINE: "postgres"
+      DATABASE_USER_NAME: "soruxgpt"
+      DATABASE_NAME: "soruxgpt"
+      DATABASE_PASSWORD: "default_key"
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      REDIS_ENABLE: "true"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+    depends_on:
+      - redis
+    networks:
+      - soruxgemini-net
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - soruxgemini-net
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: soruxgpt
+      POSTGRES_USER: soruxgpt
+      POSTGRES_PASSWORD: default_key
+    volumes:
+      - ./pg-data:/var/lib/postgres/data
+    networks:
+      - soruxgemini-net
+
+networks:
+  soruxgemini-net:
+    driver: bridge
+
+volumes:
+  redis-data:
