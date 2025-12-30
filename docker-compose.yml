@@ -43,7 +43,7 @@ services:
       POSTGRES_USER: soruxgpt
       POSTGRES_PASSWORD: default_key
     volumes:
-      - ./pg-data:/var/lib/postgres/data
+      - ./pg-data:/var/lib/postgresql/data
     networks:
       - soruxgemini-net
 
