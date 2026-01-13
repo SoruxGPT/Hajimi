@@ -1,4 +1,4 @@
-## SoruxGemini
+## Ha Ji Mi !
 
 1. Clone 本仓库
 2. 询问得到 LICENSE，和网关 Key 以及地址
